@@ -3,6 +3,7 @@
 
 #include "MUF_LineTraceWorld.h"
 #include "DrawDebugHelpers.h"
+#include "MUF_InteractInterface.h"
 
 // Sets default values for this component's properties
 UMUF_LineTraceWorld::UMUF_LineTraceWorld()
@@ -39,7 +40,16 @@ void UMUF_LineTraceWorld::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 	DrawDebugLine(GetWorld(), Start, End, FColor::Orange, false, 0.1f);
 
-	if (bHit) {
+	if (bHit) 
+	{
+		IMUF_InteractInterface* Interface = Cast<IMUF_InteractInterface>(HitResults.GetActor());
+		if (Interface)
+		{
+			Interface->InteractPure();
+			Interface->Execute_Interact(HitResults.GetActor());
+		}
+
+
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Orange, FString::Printf(TEXT("Trace Hit: %s"), *HitResults.GetActor()->GetName()));
 	}
 }

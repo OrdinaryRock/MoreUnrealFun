@@ -9,7 +9,7 @@ AMUF_PawnBase::AMUF_PawnBase()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	Health = DefaultHealth;
 }
 
 // Called when the game starts or when spawned
@@ -17,6 +17,30 @@ void AMUF_PawnBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+float AMUF_PawnBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	Health -= DamageAmount;
+	if (Health < 0) Health = 0;
+	UE_LOG(LogTemp, Warning, TEXT("Health: %f"), Health);
+	if (Health == 0)
+	{
+		UE_LOG(LogTemp, Error, TEXT("YOU ARE DEAD! (DEAD, DEAD)"));
+	}
+
+	return DamageAmount;
+}
+
+void AMUF_PawnBase::Interact_Implementation()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Implementation"));
+}
+
+void AMUF_PawnBase::InteractPure()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Pure!"));
 }
 
 // Called every frame
