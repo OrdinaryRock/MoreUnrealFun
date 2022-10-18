@@ -38,13 +38,13 @@ void AMUF_CharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void AMUF_CharacterBase::MoveForward(float Value)
 {
-	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+	FVector Direction = FRotationMatrix(GetActorRotation()).GetScaledAxis(EAxis::X);
 	AddMovementInput(Direction, Value);
 }
 
 void AMUF_CharacterBase::MoveRight(float Value)
 {
-	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
+	FVector Direction = FRotationMatrix(GetActorRotation()).GetScaledAxis(EAxis::Y);
 	AddMovementInput(Direction, Value);
 }
 
